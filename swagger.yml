@@ -1,0 +1,141 @@
+swagger: "2.0"
+info:
+  description: swagger file
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: "/api"
+
+# Path
+paths:
+  /people:
+    get:
+      operationId: people.read_all
+      tags:
+        - People
+      summary: Reading people
+      description: Reading people list
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of people
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Starting place
+          required: false
+      responses:
+        200:
+          description: Successful reading
+          schema:
+            type: array
+            items:
+              properties:
+                fname:
+                  type: string
+                lname:
+                  type: string
+                timestamp:
+                  type: string
+
+    post:
+      operationId: people.create
+      tags:
+        - People
+      summary: Create person and add to list
+      description: Create person and add to list
+      parameters:
+        - name: person
+          in: body
+          description: Person to create
+          required: True
+          schema:
+            type: object
+            properties:
+              fname:
+                type: string
+                description: First name
+              lname:
+                type: string
+                description: Last name
+      responses:
+        201:
+          description: Person created
+  
+  /people/{lname}:
+    get:
+      operationId: people.read_one
+      tags:
+        - People
+      summary: Reading person
+      description: Reading person
+      parameters:
+        - name: lname
+          in: path
+          type: string
+          description: Last name
+          required: true
+      responses:
+        200:
+          description: Successful reading
+          schema:
+            type: object
+            properties:
+              fname:
+                type: string
+              lname:
+                type: string
+              timestamp:
+                type: string
+    put:
+      operationId: people.update
+      tags:
+        - People
+      summary: Update person
+      description: Update person
+      parameters:
+        - name: lname
+          in: path
+          type: string
+          description: Last name
+          required: true
+        - name: person
+          in: body
+          description: Person to update
+          required: true
+          schema:
+            type: object
+            properties:
+              fname:
+                type: string
+                description: First name
+              lname:
+                type: string
+                description: Last name
+      responses:
+        200:
+          description: Person updated
+    
+    delete:
+      operationId: people.delete
+      tags:
+        - People
+      summary: Delete person
+      description: Delete person
+      parameters:
+        - name: lname
+          in: path
+          type: string
+          description: Last name
+          required: true
+      responses:
+        200:
+          description: Person deleted
+
+      
